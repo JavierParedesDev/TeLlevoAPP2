@@ -13,22 +13,25 @@
             <ion-card-title>Crear Cuenta</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-item>
-              <ion-label position="floating">Nombre Completo</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="floating">Correo Electrónico</ion-label>
-              <ion-input type="email"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="floating">Contraseña</ion-label>
-              <ion-input type="password"></ion-input>
-            </ion-item>
-
-            <ion-button expand="full" color="secondary">Registrarse</ion-button>
+            <form (ngSubmit)="registro()">
+              <ion-item>
+                <ion-label  position="floating">Nombre Completo</ion-label>
+                <ion-input name="nombre" [(ngModel)]="usr.nombre" type="text"></ion-input>
+              </ion-item>
+  
+              <ion-item>
+                <ion-label position="floating">Correo Electrónico</ion-label>
+                <ion-input name="email" [(ngModel)]="usr.email" type="email"></ion-input>
+              </ion-item>
+  
+              <ion-item>
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input name="contrasena" [(ngModel)]="usr.contrasena"type="password"></ion-input>
+              </ion-item>
+  
+              <ion-button type="submit" expand="full" color="secondary">Registrarse</ion-button>
+            </form>
+            
           </ion-card-content>
         </ion-card>
       </ion-col>
