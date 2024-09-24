@@ -8,8 +8,28 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'recover-password',
+    loadChildren: () => import('./recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
+  },
+  {
+    path: 'conductor',
+    loadChildren: () => import('./conductor/conductor.module').then( m => m.ConductorPageModule)
+  },
+  {
+    path: 'pasajero',
+    loadChildren: () => import('./pasajero/pasajero.module').then( m => m.PasajeroPageModule)
   },
 ];
 

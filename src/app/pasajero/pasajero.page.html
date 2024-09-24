@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Solicitar Transporte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Viajes Disponibles</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- Reemplazar con datos dinámicos de la lista de viajes -->
+            <ion-list>
+              <ion-item *ngFor="let viaje of viajes">
+                <ion-label>
+                  <h2>{{ viaje.destino }}</h2>
+                  <p>Capacidad disponible: {{ viaje.capacidad }} personas</p>
+                  <p>Costo: ${{ viaje.costo }} por persona</p>
+                </ion-label>
+                <ion-button color="primary" fill="outline" (click)="solicitarViaje(viaje)">
+                  Solicitar Viaje
+                </ion-button>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

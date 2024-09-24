@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Conductor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+        <ion-card>
+          <form  (ngSubmit)="programarViaje()">
+            <ion-card-content>
+              <ion-input name="destino" [(ngModel)]="vje.destino" type="text" placeholder="Destino"></ion-input>
+              <ion-input name="capacidad" [(ngModel)]="vje.capacidad" type="number" label="Capacidad"></ion-input>
+              <ion-input name="costo" [(ngModel)]="vje.costo" type="number" label="Costo"></ion-input>
+              <ion-input name="horaSalida" [(ngModel)]="vje.horaSalida" type="text" placeholder="Hora de salida"></ion-input>
+              
+              <ion-button expand="block" color="primary" type="submit" >
+                registrar viaje
+              </ion-button>
+            </ion-card-content>
+          </form>
+        </ion-card>
+
+
+        <ion-card-content>
+          <ion-list *ngFor="let item of viajes">
+            <h1>{{item.destino}}</h1>
+            <p>{{item.costo}}</p>
+            <p>{{item.capacidad}}</p>
+            <h3>{{item.horaSalida}}</h3>
+            <ion-button (click)="eliminarViaje(item.id)" expand="block" fill="clear" shape="round">
+              Eliminar
+            </ion-button>
+          </ion-list>
+        </ion-card-content>
+  </ion-grid>
+
+
+</ion-content>
