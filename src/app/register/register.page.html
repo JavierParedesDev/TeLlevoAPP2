@@ -15,23 +15,41 @@
           <ion-card-content>
             <form (ngSubmit)="registro()">
               <ion-item>
-                <ion-label  position="floating">Nombre Completo</ion-label>
+                <ion-label position="floating">Nombre Completo</ion-label>
                 <ion-input name="nombre" [(ngModel)]="usr.nombre" type="text"></ion-input>
               </ion-item>
-  
+
               <ion-item>
                 <ion-label position="floating">Correo Electrónico</ion-label>
                 <ion-input name="email" [(ngModel)]="usr.email" type="email"></ion-input>
               </ion-item>
-  
+
               <ion-item>
                 <ion-label position="floating">Contraseña</ion-label>
-                <ion-input name="contrasena" [(ngModel)]="usr.contrasena"type="password"></ion-input>
+                <ion-input name="contrasena" [(ngModel)]="usr.contrasena" type="password"></ion-input>
               </ion-item>
-  
+              <ion-item>
+                <ion-checkbox name="checkbox" [(ngModel)]="tieneVehiculo">Tienes Vehiculo ?</ion-checkbox>
+              </ion-item>
+             
+              <ion-item [disabled]="!tieneVehiculo">
+                <ion-label position="floating">Marca</ion-label>
+                <ion-input  name="marca" [(ngModel)]="vcl.marca" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item [disabled]="!tieneVehiculo">
+                <ion-label position="floating">Modelo</ion-label>
+                <ion-input  name="modelo" [(ngModel)]="vcl.modelo" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item [disabled]="!tieneVehiculo">
+                <ion-label position="floating">Año</ion-label>
+                <ion-input name="año" [(ngModel)]="vcl.date" type="number"></ion-input>
+              </ion-item>
+
               <ion-button type="submit" expand="full" color="secondary">Registrarse</ion-button>
             </form>
-            
+
           </ion-card-content>
         </ion-card>
       </ion-col>
