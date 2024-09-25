@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Viajes } from '../interfaces/viajes';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pasajero',
@@ -8,11 +9,21 @@ import { Viajes } from '../interfaces/viajes';
 })
 export class PasajeroPage implements OnInit {
   viajes: Viajes[]= [];
+  private intervalo : any;
 
-  constructor() { }
+  reserva : boolean = false;
+  EliminarReserva : boolean = true;
+ 
+  constructor(
+
+    private alert : AlertController
+
+  ) { }
 
   ngOnInit() {
-    this.cargarViajes()
+    this.intervalo = setInterval(() =>{
+      this.cargarViajes();
+    },1000)
   }
   cargarViajes() {
     const StorageViajes = localStorage.getItem('viajes');
@@ -21,11 +32,33 @@ export class PasajeroPage implements OnInit {
     } else {
       console.log('No hay viajes disponibles.');
     }
+    
   }
 
-  solicitarViaje(viaje: Viajes) {
-    console.log();
-    // Aquí puedes manejar la solicitud del viaje
+  reservarAsiento(viajes : Viajes, id: number) {
+    console.log(viajes, id);
+    this.alertas("Asiento Reservado","su destino es : "+ viajes.destino)
+    this.reserva = true
+    this.EliminarReserva = false
+    
   }
+  eliminarReserva(){
+    this.EliminarReserva = true
+    this.reserva = false
+
+  }
+
+  async alertas(headerMensasje: string , mensaje: string){
+    const newAlerta = await this.alert.create({
+      header: headerMensasje,
+      message: mensaje,
+
+      buttons: [ 'Aceptar' ]
+    })
+
+    newAlerta.present();
+    
+  }
+
 
 }
