@@ -29,11 +29,19 @@ export class LoginPage implements OnInit {
       this.alertas("Error", "Rellene los campos");
       return; 
     }
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')?? '[]')
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')?? '[]')
 
-    if(!Array.isArray(usuarios)){
-      
+    const usuarioEncontrados = usuarios.find((usuarios: { email: string; contrasena: string; }) => 
+      usuarios.email === this.urs.email && usuarios.contrasena === this.urs.contrasena
+    )
+
+    if(usuarioEncontrados){
+      this.router.navigateByUrl("/tabs/home")
+    }else{
+      this.alertas("Error","usuario no encontrado")
     }
+
+
 
   }
 
