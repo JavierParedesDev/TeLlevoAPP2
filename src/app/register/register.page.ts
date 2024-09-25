@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../interfaces/usuario';
 import { AlertController } from '@ionic/angular';
 import { Vehiculo } from '../interfaces/vehiculo';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +27,9 @@ export class RegisterPage implements OnInit {
   tieneVehiculo: boolean = false;
 
   constructor(
-    private alert: AlertController
+    private alert: AlertController,
+    private firestore: AngularFirestore,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -47,11 +51,7 @@ export class RegisterPage implements OnInit {
     }else{
       console.log("no tiene vehiculo")
     }
-    let usuarios = JSON.parse(localStorage.getItem('usuarios')?? '[]');
-
-    if(!Array.isArray(usuarios)){
-      usuarios = []
-    }
+    
     const usuaroRegistro ={
       idUser: this.usr.id,
       nombre: this.usr.nombre,
@@ -65,12 +65,14 @@ export class RegisterPage implements OnInit {
       }
       :null
     }
-   
-    usuarios.push(usuaroRegistro);
+  
+    this.registrarUsuario(usuaroRegistro).then(()=>{
+      this.alertas("usuario Registrado");
+      this.router.navigateByUrl("/login")
+    }).catch(error => {
+      this.alertas("Error al registrar el usuario: " + error);
+    });
 
-    localStorage.setItem('usuarios', JSON.stringify(usuarios))
-
-    this.alertas("Usuario Registrado");
     this.usr={
       id: Date.now(),
       nombre:"",
@@ -93,6 +95,11 @@ export class RegisterPage implements OnInit {
     });
 
     alert.present();
+  }
+
+
+  registrarUsuario(usuario: any) {
+    return this.firestore.collection('usuarios').add(usuario);
   }
 
 }
