@@ -1,0 +1,36 @@
+ion-card.custom-card {
+  margin: 20px 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave para la card */
+  border-radius: 12px;
+  border: 1px solid #e0e0e0; /* Un borde ligero para definición */
+  min-height: 300px; /* Altura mínima para que el contenido quepa bien */
+}
+
+.map-container {
+  height: 200px; /* Ajusta esta altura según sea necesario */
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: lightgray;
+}
+
+.leaflet-container {
+  height: 100% !important; /* Asegura que el mapa ocupe el 100% del contenedor */
+  width: 100% !important;
+}
+
+.leaflet-map {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+ion-card-content {
+  padding: 20px;
+}
+
+ion-button {
+  margin-top: 15px;
+}

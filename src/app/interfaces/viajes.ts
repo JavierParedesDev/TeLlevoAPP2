@@ -4,4 +4,6 @@ export interface Viajes {
     capacidad: number;
     costo: number;
     horaSalida: string;
+    lat?: number;
+    lng?: number;
 }
