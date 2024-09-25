@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../interfaces/usuario';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Component({
   selector: 'app-login',
@@ -18,28 +20,31 @@ export class LoginPage implements OnInit {
   }
   constructor(
     private AlertCtr : AlertController,
-    private router : Router
+    private router : Router,
+    private firestore: AngularFirestore, 
+    private auth: AngularFireAuth
   ) { }
 
   ngOnInit() {
   }
 
+ 
   login(){
     if (!this.urs.email || !this.urs.contrasena) {
       this.alertas("Error", "Rellene los campos");
       return; 
     }
-    let usuarios = JSON.parse(localStorage.getItem('usuarios')?? '[]')
-
-    const usuarioEncontrados = usuarios.find((usuarios: { email: string; contrasena: string; }) => 
-      usuarios.email === this.urs.email && usuarios.contrasena === this.urs.contrasena
-    )
-
-    if(usuarioEncontrados){
-      this.router.navigateByUrl("/tabs/home")
-    }else{
-      this.alertas("Error","usuario no encontrado")
-    }
+    this.firestore.collection('usuarios', ref => ref.where('email', '==', this.urs.email).where('contrasena', '==', this.urs.contrasena))
+      .get().subscribe(snapshot => {
+        if (snapshot.empty) {
+          this.alertas("Error", "Usuario no encontrado");
+        } else {
+          this.router.navigateByUrl("/tabs/home");
+        }
+      }, error => {
+        console.error("Error al obtener los usuarios: ", error);
+        this.alertas("Error", "No se pudo iniciar sesión");
+      });
 
 
 
@@ -55,4 +60,5 @@ export class LoginPage implements OnInit {
     alrt.present()
   }
 
-}
+}import { AngularFireAuth } from '@angular/fire/compat/auth';
+
