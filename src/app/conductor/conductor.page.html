@@ -12,8 +12,17 @@
               <ion-input name="destino" [(ngModel)]="vje.destino" type="text" placeholder="Destino"></ion-input>
               <ion-input name="capacidad" [(ngModel)]="vje.capacidad" type="number" label="Capacidad"></ion-input>
               <ion-input name="costo" [(ngModel)]="vje.costo" type="number" label="Costo"></ion-input>
-              <ion-input name="horaSalida" [(ngModel)]="vje.horaSalida" type="text" placeholder="Hora de salida"></ion-input>
-              
+              <ion-label>Hora de salida</ion-label>
+              <ion-datetime
+                name="horaSalida"
+                [(ngModel)]="vje.horaSalida"
+                presentation="time"
+                placeholder="Seleccionar hora"
+                cancel-text="Cancelar"
+                done-text="Hecho"
+                hour-cycle="h23"
+              ></ion-datetime>
+
               <ion-button expand="block" color="primary" type="submit" >
                 registrar viaje
               </ion-button>
@@ -22,18 +31,28 @@
         </ion-card>
 
 
-        <ion-card-content>
-          <ion-list *ngFor="let item of viajes">
-                <ion-label>
-                  <h2>{{ item.destino| uppercase }}</h2>
-                  <p>Capacidad disponible: {{ item.capacidad }} personas</p>
-                  <p>Costo: ${{ item.costo }} por persona</p>
-                </ion-label>
+    <ion-card-content>
+      <!-- Listado de viajes -->
+      <ion-list *ngFor="let item of viajes">
+        <ion-card class="custom-card">
+          <ion-card-content>
+            <ion-label>
+              <h2>{{ item.destino | uppercase }}</h2>
+              <p>Capacidad disponible: {{ item.capacidad }} personas</p>
+              <p>Costo: ${{ item.costo }} por persona</p>
+            </ion-label>
+
+            <div *ngIf="item.lat && item.lng" class="map-container">
+              <div id="map-{{ item.id }}" class="leaflet-map"></div>
+            </div>
+
             <ion-button (click)="eliminarViaje(item.id)" color="danger" expand="block" fill="clear" shape="round">
               Eliminar
             </ion-button>
-          </ion-list>
-        </ion-card-content>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-card-content>
   </ion-grid>
 
 
