@@ -1,11 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
+
+<ion-card-content>
+  <ion-toolbar color="primary">
+    <ion-title slot="end">
+      {{ usuarioActual?.nombre |uppercase}}
     </ion-title>
+    <ion-avatar>
+      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+</ion-card-content>
+<ion-content >
+ <ion-card-content>
+  <ion-item color="tertiary">
+    <ion-label>28 Viajes</ion-label>
+    <ion-label>Esta semana</ion-label>
+    <ion-icon slot="start" name="car"></ion-icon>
+  </ion-item>
+  <ion-item color="tertiary">
+    <ion-label>5 estrellas</ion-label>
+    <ion-icon slot="start" name="star"></ion-icon>
+  </ion-item>
+  <ion-item color="tertiary">
+    <ion-label>Hualpen</ion-label>
+    <ion-label>Ultimo viaje</ion-label>
+    <ion-icon slot="start" name="map"></ion-icon>
+  </ion-item>
+  <ion-item color="tertiary">
+    <ion-label>Total $25.000</ion-label>
+    <ion-label>Esta semana</ion-label>
+    <ion-icon slot="start" name="cash"></ion-icon>
+  </ion-item>
+ </ion-card-content>
+  
 </ion-content>
