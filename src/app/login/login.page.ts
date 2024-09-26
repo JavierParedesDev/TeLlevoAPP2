@@ -3,6 +3,7 @@ import { Usuario } from '../interfaces/usuario';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -60,5 +61,5 @@ export class LoginPage implements OnInit {
     alrt.present()
   }
 
-}import { AngularFireAuth } from '@angular/fire/compat/auth';
+}
 
