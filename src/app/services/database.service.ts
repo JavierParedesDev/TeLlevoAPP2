@@ -8,10 +8,10 @@ import { Observable } from 'rxjs';
 export class DatabaseService {
 
   constructor(
-    private firestorage: AngularFirestore,
+    private firestore: AngularFirestore,
   ) { }
 
   recuperarUsuarios(): Observable<any[]> {
-    return this.firestorage.collection('usuarios').valueChanges();
+    return this.firestore.collection('usuarios').valueChanges();
   }
 }

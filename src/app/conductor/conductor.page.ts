@@ -3,6 +3,7 @@ import { Viajes } from '../interfaces/viajes';
 import { LoadingController } from '@ionic/angular';
 
 import { MapsService } from '../services/maps.service'; // Servicio creado exclusivamente para el mapa
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-conductor',
@@ -10,6 +11,7 @@ import { MapsService } from '../services/maps.service'; // Servicio creado exclu
   styleUrls: ['./conductor.page.scss'],
 })
 export class ConductorPage implements OnInit {
+  tieneVehiculo: boolean = false;
 
   vje:Viajes={
     id: Date.now(),
@@ -23,10 +25,13 @@ export class ConductorPage implements OnInit {
 
   constructor(
     private mapsService: MapsService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit() {
+    this.verificarVehiculo();
+    console.log("verificar", this.verificarVehiculo())
     this.cargarViajes()
   }
 
@@ -121,6 +126,19 @@ export class ConductorPage implements OnInit {
         } else {
           console.warn(`El contenedor del mapa ${mapId} no está disponible.`);
         }
+      }
+    });
+  }
+
+  verificarVehiculo() {
+    this.authService.getUser().subscribe(usuario => {
+      if (usuario) {
+        this.authService.getUserVehicle(usuario.uid).subscribe(vehiculo => {
+          this.tieneVehiculo = !!vehiculo; 
+          if (!this.tieneVehiculo) {
+            console.log("El usuario no tiene vehículo habilitado.");
+          }
+        });
       }
     });
   }

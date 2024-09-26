@@ -2,7 +2,7 @@
 <ion-card-content>
   <ion-toolbar color="primary">
     <ion-title slot="end">
-      {{ usuarioActual?.nombre |uppercase}}
+      {{email}}
     </ion-title>
     <ion-avatar>
       <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
@@ -30,6 +30,24 @@
     <ion-label>Esta semana</ion-label>
     <ion-icon slot="start" name="cash"></ion-icon>
   </ion-item>
+
+
+  <ion-card-content>
+    <ion-text >Hola 
+      Que quieres hacer hoy ? </ion-text>
+    <ion-card button routerLink="/tabs/pasajero" class="ion-padding">
+      <ion-card class="ion-padding">
+        <ion-label>Quiero ser pasajero</ion-label>
+      </ion-card>
+      <img src="assets/pasajero2.png" alt="Logo" class="logo" />
+    </ion-card>
+    <ion-card button routerLink="/tabs/conductor" class="ion-padding">
+      <ion-card class="ion-padding">
+        <ion-label>Quiero ser conductor</ion-label>
+      </ion-card>
+      <img src="assets/conductor.png" alt="Logo" class="logo" />
+    </ion-card>
+  </ion-card-content>
  </ion-card-content>
   
 </ion-content>

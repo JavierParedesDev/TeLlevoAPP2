@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
   <ion-grid>
-        <ion-card>
+        <ion-card >
           <form  (ngSubmit)="programarViaje()">
             <ion-card-content>
               <ion-input name="destino" [(ngModel)]="vje.destino" type="text" placeholder="Destino"></ion-input>
@@ -29,6 +29,13 @@
             </ion-card-content>
           </form>
         </ion-card>
+        <ng-template>
+          <ion-card>
+            <ion-card-content>
+              <p>No estás habilitado para programar un viaje porque no tienes un vehículo registrado.</p>
+            </ion-card-content>
+          </ion-card>
+        </ng-template>
 
 
         <ion-card-content>
@@ -58,8 +65,11 @@
                   <ion-icon name="trash-outline"></ion-icon> Eliminar viaje
                 </ion-button>
               </ion-card-content>
+              
             </ion-card>
+            
           </ion-list>
         </ion-card-content>
+        
   </ion-grid>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../services/database.service';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-home',
@@ -7,20 +7,18 @@ import { DatabaseService } from '../services/database.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  usuarios: any[] = [];
-  usuarioActual: any;
+  email: any;
+
 
   constructor(
-    private db: DatabaseService
+    private authServi: AuthServiceService
   ) {}
   ngOnInit() {
-    this.db.recuperarUsuarios().subscribe((data) => {
-      this.usuarios = data;
-      if (this.usuarios.length > 0) {
-        this.usuarioActual = this.usuarios[0]; 
-        console.log('Usuario actual:', this.usuarioActual);
-      }
-    });
+    this.authServi.getUser().subscribe(user => {
+      this.email = user?.email;
+      console.log(user)
+    })
+  
   }
 
   
