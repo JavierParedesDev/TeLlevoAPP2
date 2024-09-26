@@ -31,29 +31,35 @@
         </ion-card>
 
 
-    <ion-card-content>
-      <!-- Listado de viajes -->
-      <ion-list *ngFor="let item of viajes">
-        <ion-card class="custom-card">
-          <ion-card-content>
-            <ion-label>
-              <h2>{{ item.destino | uppercase }}</h2>
-              <p>Capacidad disponible: {{ item.capacidad }} personas</p>
-              <p>Costo: ${{ item.costo }} por persona</p>
-            </ion-label>
+        <ion-card-content>
+          <!-- Listado de viajes -->
+          <ion-list *ngFor="let item of viajes">
+            <ion-card class="custom-card" [id]="'card-' + item.id">
+              <ion-card-content>
+                <!-- Información del destino -->
+                <div class="card-header">
+                  <div class="card-info">
+                    <h2>{{ item.destino | uppercase }}</h2>
+                    <p>Capacidad disponible: {{ item.capacidad }} personas</p>
+                    <p>Costo: ${{ item.costo }} por persona</p>
+                  </div>
+                  <div class="card-icon">
+                    <ion-icon name="location-outline"></ion-icon>
+                  </div>
+                </div>
 
-            <div *ngIf="item.lat && item.lng" class="map-container">
-              <div id="map-{{ item.id }}" class="leaflet-map"></div>
-            </div>
+                <!-- Contenedor del mapa -->
+                <div *ngIf="item.lat && item.lng" class="map-container">
+                  <div id="map-{{ item.id }}" class="leaflet-map"></div>
+                </div>
 
-            <ion-button (click)="eliminarViaje(item.id)" color="danger" expand="block" fill="clear" shape="round">
-              Eliminar
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-    </ion-card-content>
+                <!-- Botón de eliminar -->
+                <ion-button (click)="eliminarViaje(item.id)" class="delete-btn" expand="block" style="--background: #f56565; --color: white;">
+                  <ion-icon name="trash-outline"></ion-icon> Eliminar viaje
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-list>
+        </ion-card-content>
   </ion-grid>
-
-
 </ion-content>

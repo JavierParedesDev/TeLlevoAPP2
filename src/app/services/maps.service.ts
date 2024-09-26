@@ -8,7 +8,7 @@ import { Geolocation } from '@capacitor/geolocation';
 })
 export class MapsService {
   private apiKey = '5b3ce3597851110001cf62481b2e99cd208841a7b5472176e8ae01d3'; // OpenRouteService API key || Podría dejarlo en un .env también pero es innecesario para este caso
-  maps: { [key: number]: any } = {};
+  maps: { [key: string]: any } = {};
 
   constructor(private http: HttpClient) {}
 
@@ -76,10 +76,43 @@ export class MapsService {
     });
   }
 
-  // Destruir el mapa (limpiar)
-  destroyMap(map: any): void {
+  destroyMap(mapId: string): void {
+    const map = this.maps[mapId];
     if (map) {
-      map.remove(); // Elimina el mapa del DOM
+      map.remove(); // Elimina el mapa del DOM y su memoria
+      delete this.maps[mapId]; // Elimina el registro del mapa en la lista de mapas
     }
   }
+
+  // Destruir todos los mapas
+  destroyAllMaps(): void {
+    Object.keys(this.maps).forEach((mapId) => {
+      this.destroyMap(mapId);
+    });
+  }
+
+  // Refrescar los mapas (destruir y volver a crear)
+  refreshMaps(viajes: any[], currentLocation: any): void {
+    this.destroyAllMaps(); // Destruye todos los mapas activos
+
+    setTimeout(() => {
+      viajes.forEach((viaje) => {
+        if (viaje.lat !== undefined && viaje.lng !== undefined) {
+          const mapId = `map-${viaje.id}`;
+
+          const mapContainer = document.getElementById(mapId);
+          if (mapContainer) {
+            const map = this.initMap(mapId, viaje.lat, viaje.lng);
+            this.addMarker(map, viaje.lat, viaje.lng);
+
+            if (currentLocation) {
+              this.addMarker(map, currentLocation.lat, currentLocation.lng);
+              this.drawRoute(map, currentLocation.lat, currentLocation.lng, viaje.lat, viaje.lng);
+            }
+          }
+        }
+      });
+    }, 300); // Agrega un pequeño retraso para asegurarse de que el DOM esté listo
+  }
+
 }

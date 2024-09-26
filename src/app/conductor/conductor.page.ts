@@ -32,10 +32,7 @@ export class ConductorPage implements OnInit {
 
   async ngAfterViewInit() {
     this.currentLocation = await this.mapsService.getCurrentLocation();
-
-    setTimeout(() => {
-      this.initMaps();
-    }, 300);
+    this.mapsService.refreshMaps(this.viajes, this.currentLocation);
   }
 
   async initCurrentLocation() {
@@ -63,7 +60,7 @@ export class ConductorPage implements OnInit {
       this.vje.lat = location.lat;
       this.vje.lng = location.lng;
 
-      viajes.push(this.vje);
+      viajes.unshift(this.vje);
       localStorage.setItem('viajes', JSON.stringify(viajes));
       console.log('Viaje guardado:', this.vje)
 
@@ -75,7 +72,7 @@ export class ConductorPage implements OnInit {
         horaSalida: ""
       };
       this.cargarViajes();
-      this.initMaps();
+      this.mapsService.refreshMaps(this.viajes, this.currentLocation); // Refresca los mapas
     } catch (error) {
       console.error('Error al crear la dirección:', error);
     } finally {
@@ -96,20 +93,22 @@ export class ConductorPage implements OnInit {
     const StorageViajes = localStorage.getItem('viajes');
     let viajes: Viajes[] = StorageViajes ? JSON.parse(StorageViajes) : [];
 
+    document.getElementById(`card-${id}`)?.classList.add('removing'); // Añadir clase para la animación
+
+
     viajes = viajes.filter(viaje => viaje.id !== id);
 
     localStorage.setItem('viajes', JSON.stringify(viajes));
 
     console.log(`Viaje con ID ${id} eliminado.`);
     this.cargarViajes();
-    this.initMaps();
+    this.mapsService.refreshMaps(this.viajes, this.currentLocation); // Refresca los mapas
   }
 
   initMaps() {
     this.viajes.forEach((viaje) => {
       if (viaje.lat !== undefined && viaje.lng !== undefined) {
         const mapId = `map-${viaje.id}`;
-
         const mapContainer = document.getElementById(mapId);
         if (mapContainer) {
           const map = this.mapsService.initMap(mapId, viaje.lat, viaje.lng);
